@@ -32,6 +32,10 @@ external clearRect: (context, int, int, int, int) => unit = "clearRect";
 external arc: (context, float, float, float, float, float, bool) => unit =
   "arc";
 
+[@bs.send] external moveTo: (context, float, float) => unit = "moveTo";
+
+[@bs.send] external lineTo: (context, float, float) => unit = "lineTo";
+
 [@bs.send] external fill: context => unit = "fill";
 
 [@bs.send] external stroke: context => unit = "stroke";

@@ -12,6 +12,14 @@ Draw$Inversion.circle(/* record */[
       /* y */100
     ], 40, screen);
 
+Draw$Inversion.segment(/* record */[
+      /* x */100,
+      /* y */100
+    ], /* record */[
+      /* x */300,
+      /* y */300
+    ], screen);
+
 exports.canvas = canvas;
 exports.screen = screen;
 /* canvas Not a pure module */

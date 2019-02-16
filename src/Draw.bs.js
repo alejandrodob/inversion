@@ -7,11 +7,19 @@ var pi = Math.acos(-1);
 function circle(param, r, ctx) {
   ctx.beginPath();
   ctx.arc(param[/* x */0], param[/* y */1], r, 0, pi * 2, true);
-  ctx.closePath();
+  ctx.stroke();
+  return /* () */0;
+}
+
+function segment(from, to_, ctx) {
+  ctx.beginPath();
+  ctx.moveTo(from[/* x */0], from[/* y */1]);
+  ctx.lineTo(to_[/* x */0], to_[/* y */1]);
   ctx.stroke();
   return /* () */0;
 }
 
 exports.pi = pi;
 exports.circle = circle;
+exports.segment = segment;
 /* pi Not a pure module */
