@@ -40,6 +40,10 @@ external arc: (context, float, float, float, float, float, bool) => unit =
 
 [@bs.send] external stroke: context => unit = "stroke";
 
+[@bs.set] external setFillStyle: (context, string) => unit = "fillStyle";
+
+[@bs.set] external setStrokeStyle: (context, string) => unit = "strokeStyle";
+
 [@bs.val]
 external requestAnimationFrame: (int => int) => int = "requestAnimationFrame";
 

@@ -2,24 +2,51 @@
 'use strict';
 
 var Draw$Inversion = require("./Draw.bs.js");
+var Geometry$Inversion = require("./Geometry.bs.js");
 
 var canvas = document.getElementById("screen");
 
+var canvasWidth = canvas.width;
+
+var canvasHeight = canvas.height;
+
 var screen = canvas.getContext("2d");
 
-Draw$Inversion.circle(/* record */[
-      /* x */100,
-      /* y */100
-    ], 40, screen);
+var inversionCentre_000 = canvasWidth / 4;
 
-Draw$Inversion.segment(/* record */[
-      /* x */100,
-      /* y */100
-    ], /* record */[
-      /* x */300,
-      /* y */300
-    ], screen);
+var inversionCentre_001 = canvasHeight / 4;
+
+var inversionCentre = /* tuple */[
+  inversionCentre_000,
+  inversionCentre_001
+];
+
+var inversionCircumference = /* record */[
+  /* centre */inversionCentre,
+  /* radius */120
+];
+
+Draw$Inversion.point(inversionCentre, undefined, screen);
+
+Draw$Inversion.circumference(inversionCircumference, undefined, screen);
+
+var a = /* tuple */[
+  245,
+  345
+];
+
+var a$prime = Geometry$Inversion.inverseOfPoint(inversionCircumference, a);
+
+Draw$Inversion.point(a, "green", screen);
+
+Draw$Inversion.point(a$prime, "red", screen);
 
 exports.canvas = canvas;
+exports.canvasWidth = canvasWidth;
+exports.canvasHeight = canvasHeight;
 exports.screen = screen;
+exports.inversionCentre = inversionCentre;
+exports.inversionCircumference = inversionCircumference;
+exports.a = a;
+exports.a$prime = a$prime;
 /* canvas Not a pure module */

@@ -1,21 +1,33 @@
 open Dom;
+open Geometry;
 
-let pi = acos(-1.);
+let defaultColor = "black";
 
-type point = {
-  x: float,
-  y: float,
+let setDefaultStrokeStyle = ctx => setStrokeStyle(ctx, defaultColor);
+let setDefaultFillStyle = ctx => setFillStyle(ctx, defaultColor);
+
+let circumference = ({centre, radius}, ~color=defaultColor, ctx) => {
+  let (c1, c2) = centre;
+  setStrokeStyle(ctx, color);
+  beginPath(ctx);
+  arc(ctx, c1, c2, radius, 0., pi *. 2., true);
+  stroke(ctx);
+  setDefaultStrokeStyle(ctx);
 };
 
-let circle = ({x, y}, r, ctx) => {
+let segment = (((a1, a2), (b1, b2)), ~color=defaultColor, ctx) => {
+  setStrokeStyle(ctx, color);
   beginPath(ctx);
-  arc(ctx, x, y, r, 0., pi *. 2., true);
+  moveTo(ctx, a1, a2);
+  lineTo(ctx, b1, b2);
   stroke(ctx);
+  setDefaultStrokeStyle(ctx);
 };
 
-let segment = (from, to_, ctx) => {
+let point = ((p1, p2), ~color=defaultColor, ctx) => {
+  setFillStyle(ctx, color);
   beginPath(ctx);
-  moveTo(ctx, from.x, from.y);
-  lineTo(ctx, to_.x, to_.y);
-  stroke(ctx);
+  arc(ctx, p1, p2, 1., 0., pi *. 2., true);
+  fill(ctx);
+  setDefaultFillStyle(ctx);
 };
