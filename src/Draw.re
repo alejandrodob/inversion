@@ -1,4 +1,4 @@
-open Dom;
+open DomUtils;
 open Geometry;
 
 let defaultColor = "black";
@@ -31,3 +31,12 @@ let point = ((p1, p2), ~color=defaultColor, ctx) => {
   fill(ctx);
   setDefaultFillStyle(ctx);
 };
+
+let clear = canvas =>
+  clearRect(
+    getContext2d(canvas),
+    0,
+    0,
+    elementWidth(canvas),
+    elementHeight(canvas),
+  );

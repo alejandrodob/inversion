@@ -49,10 +49,16 @@ function point(param, $staropt$star, ctx) {
   return /* () */0;
 }
 
+function clear(canvas) {
+  canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+  return /* () */0;
+}
+
 exports.defaultColor = defaultColor;
 exports.setDefaultStrokeStyle = setDefaultStrokeStyle;
 exports.setDefaultFillStyle = setDefaultFillStyle;
 exports.circumference = circumference;
 exports.segment = segment;
 exports.point = point;
+exports.clear = clear;
 /* Geometry-Inversion Not a pure module */
