@@ -6,7 +6,7 @@
     "bsb:start": "bsb -make-world -w",
     "bsb:clean": "bsb -clean-world",
     "dev": "parcel index.html",
-    "build": "parcel build index.html"
+    "deploy": "parcel build index.html -d docs --public-url ./ && git add docs/ && git commit -m\":building_construction:\" && git push origin master"
   },
   "keywords": [
     "BuckleScript"
