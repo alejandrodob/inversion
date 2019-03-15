@@ -2,9 +2,9 @@ open Dom;
 
 type canvasContext2d;
 
-[@bs.get] external elementWidth: element => int = "width";
+[@bs.get] external elementWidth: element => float = "width";
 
-[@bs.get] external elementHeight: element => int = "height";
+[@bs.get] external elementHeight: element => float = "height";
 
 [@bs.val]
 external getElementById: string => element = "document.getElementById";
@@ -16,10 +16,16 @@ external getContext2d: (element, [@bs.as "2d"] _) => canvasContext2d =
   "getContext";
 
 [@bs.send]
-external fillRect: (canvasContext2d, int, int, int, int) => unit = "fillRect";
+external setTransform:
+  (canvasContext2d, float, float, float, float, float, float) => unit =
+  "fillRect";
 
 [@bs.send]
-external clearRect: (canvasContext2d, int, int, int, int) => unit =
+external fillRect: (canvasContext2d, float, float, float, float) => unit =
+  "fillRect";
+
+[@bs.send]
+external clearRect: (canvasContext2d, float, float, float, float) => unit =
   "clearRect";
 
 [@bs.send] external beginPath: canvasContext2d => unit = "beginPath";

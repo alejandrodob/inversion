@@ -15,9 +15,10 @@ function setDefaultFillStyle(ctx) {
   return /* () */0;
 }
 
-function circumference(param, $staropt$star, ctx) {
+function circumference(param, $staropt$star, canvas) {
   var centre = param[/* centre */0];
   var color = $staropt$star !== undefined ? $staropt$star : defaultColor;
+  var ctx = canvas.getContext("2d");
   ctx.strokeStyle = color;
   ctx.beginPath();
   ctx.arc(centre[0], centre[1], param[/* radius */1], 0, Geometry$Inversion.pi * 2, true);
@@ -26,21 +27,52 @@ function circumference(param, $staropt$star, ctx) {
   return /* () */0;
 }
 
-function segment(param, $staropt$star, ctx) {
+function segment(param, $staropt$star, canvas) {
   var match = param[1];
   var match$1 = param[0];
   var color = $staropt$star !== undefined ? $staropt$star : defaultColor;
+  var ctx = canvas.getContext("2d");
   ctx.strokeStyle = color;
   ctx.beginPath();
   ctx.moveTo(match$1[0], match$1[1]);
   ctx.lineTo(match[0], match[1]);
   ctx.stroke();
   ctx.strokeStyle = defaultColor;
+  ctx.closePath();
   return /* () */0;
 }
 
-function point(param, $staropt$star, ctx) {
+function line(param, $staropt$star, canvas) {
+  var match = param[1];
+  var match$1 = param[0];
+  var a2 = match$1[1];
+  var a1 = match$1[0];
   var color = $staropt$star !== undefined ? $staropt$star : defaultColor;
+  var ctx = canvas.getContext("2d");
+  var canvasWidth = canvas.width;
+  var canvasHeight = canvas.height;
+  var d1 = match[0] - a1;
+  var d2 = match[1] - a2;
+  var canvasSize = Geometry$Inversion.distance(/* tuple */[
+        0,
+        0
+      ], /* tuple */[
+        canvasWidth,
+        canvasHeight
+      ]);
+  ctx.strokeStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(a1 - d1 * canvasSize, a2 - d2 * canvasSize);
+  ctx.lineTo(a1 + d1 * canvasSize, a2 + d2 * canvasSize);
+  ctx.stroke();
+  ctx.strokeStyle = defaultColor;
+  ctx.closePath();
+  return /* () */0;
+}
+
+function point(param, $staropt$star, canvas) {
+  var color = $staropt$star !== undefined ? $staropt$star : defaultColor;
+  var ctx = canvas.getContext("2d");
   ctx.fillStyle = color;
   ctx.beginPath();
   ctx.arc(param[0], param[1], 1, 0, Geometry$Inversion.pi * 2, true);
@@ -59,6 +91,7 @@ exports.setDefaultStrokeStyle = setDefaultStrokeStyle;
 exports.setDefaultFillStyle = setDefaultFillStyle;
 exports.circumference = circumference;
 exports.segment = segment;
+exports.line = line;
 exports.point = point;
 exports.clear = clear;
 /* Geometry-Inversion Not a pure module */

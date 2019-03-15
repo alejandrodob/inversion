@@ -1,18 +1,13 @@
 open DomUtils;
 open Geometry;
 
-let canvas = getElementById("screen");
-let canvasWidth = float_of_int(elementWidth(canvas));
-let canvasHeight = float_of_int(elementHeight(canvas));
-
-let screen = getContext2d(canvas);
-
-let inversionCentre = (canvasWidth /. 4., canvasHeight /. 4.);
+let inversionCentre = (125., 125.);
 let inversionCircumference = {centre: inversionCentre, radius: 120.};
 
 type state = {
   points: list(point),
   circumferences: list(circumference),
+  lines: list(line),
 };
 
 type mouseControls = {
@@ -22,18 +17,18 @@ type mouseControls = {
 
 let draw = (state, canvas) => {
   Draw.clear(canvas);
-  let ctx = getContext2d(canvas);
-  List.iter(p => Draw.point(p, ctx), state.points);
+  List.iter(p => Draw.point(p, canvas), state.points);
   List.iter(
     p =>
       Draw.point(
         inverseOfPoint(inversionCircumference, p),
         ~color="red",
-        ctx,
+        canvas,
       ),
     state.points,
   );
-  List.iter(c => Draw.circumference(c, ctx), state.circumferences);
+  List.iter(c => Draw.circumference(c, canvas), state.circumferences);
+  List.iter(l => Draw.line(l, canvas), state.lines);
 };
 
 let addTo = (state, point) => {...state, points: [point, ...state.points]};
@@ -51,16 +46,23 @@ let rec drawingLoop = (state, mouseControls, canvas, _) => {
 let initialState = {
   points: [inversionCentre],
   circumferences: [inversionCircumference],
+  lines: [((0., 0.), (1., 1.)), ((15., 10.), (15., 9.))],
 };
 
 let mouseControls = {pressed: false, position: (0., 0.)};
 
-addEventListener(canvas, "mousedown", _ => mouseControls.pressed = true);
+let init = () => {
+  let canvas = getElementById("screen");
 
-addEventListener(canvas, "mouseup", _ => mouseControls.pressed = false);
+  addEventListener(canvas, "mousedown", _ => mouseControls.pressed = true);
 
-addEventListener(canvas, "mousemove", e =>
-  mouseControls.position = getCursorCoords(canvas, e)
-);
+  addEventListener(canvas, "mouseup", _ => mouseControls.pressed = false);
 
-drawingLoop(initialState, mouseControls, canvas, 0);
+  addEventListener(canvas, "mousemove", e =>
+    mouseControls.position = getCursorCoords(canvas, e)
+  );
+
+  drawingLoop(initialState, mouseControls, canvas, 0);
+};
+
+init();

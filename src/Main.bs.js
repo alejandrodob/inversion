@@ -6,21 +6,9 @@ var Draw$Inversion = require("./Draw.bs.js");
 var DomUtils$Inversion = require("./DomUtils.bs.js");
 var Geometry$Inversion = require("./Geometry.bs.js");
 
-var canvas = document.getElementById("screen");
-
-var canvasWidth = canvas.width;
-
-var canvasHeight = canvas.height;
-
-var screen = canvas.getContext("2d");
-
-var inversionCentre_000 = canvasWidth / 4;
-
-var inversionCentre_001 = canvasHeight / 4;
-
 var inversionCentre = /* tuple */[
-  inversionCentre_000,
-  inversionCentre_001
+  125,
+  125
 ];
 
 var inversionCircumference = /* record */[
@@ -30,16 +18,18 @@ var inversionCircumference = /* record */[
 
 function draw(state, canvas) {
   Draw$Inversion.clear(canvas);
-  var ctx = canvas.getContext("2d");
   List.iter((function (p) {
-          return Draw$Inversion.point(p, undefined, ctx);
+          return Draw$Inversion.point(p, undefined, canvas);
         }), state[/* points */0]);
   List.iter((function (p) {
-          return Draw$Inversion.point(Geometry$Inversion.inverseOfPoint(inversionCircumference, p), "red", ctx);
+          return Draw$Inversion.point(Geometry$Inversion.inverseOfPoint(inversionCircumference, p), "red", canvas);
         }), state[/* points */0]);
-  return List.iter((function (c) {
-                return Draw$Inversion.circumference(c, undefined, ctx);
-              }), state[/* circumferences */1]);
+  List.iter((function (c) {
+          return Draw$Inversion.circumference(c, undefined, canvas);
+        }), state[/* circumferences */1]);
+  return List.iter((function (l) {
+                return Draw$Inversion.line(l, undefined, canvas);
+              }), state[/* lines */2]);
 }
 
 function addTo(state, point) {
@@ -48,7 +38,8 @@ function addTo(state, point) {
             point,
             state[/* points */0]
           ],
-          /* circumferences */state[/* circumferences */1]
+          /* circumferences */state[/* circumferences */1],
+          /* lines */state[/* lines */2]
         ];
 }
 
@@ -79,9 +70,36 @@ var initialState_001 = /* circumferences : :: */[
   /* [] */0
 ];
 
+var initialState_002 = /* lines : :: */[
+  /* tuple */[
+    /* tuple */[
+      0,
+      0
+    ],
+    /* tuple */[
+      1,
+      1
+    ]
+  ],
+  /* :: */[
+    /* tuple */[
+      /* tuple */[
+        15,
+        10
+      ],
+      /* tuple */[
+        15,
+        9
+      ]
+    ],
+    /* [] */0
+  ]
+];
+
 var initialState = /* record */[
   initialState_000,
-  initialState_001
+  initialState_001,
+  initialState_002
 ];
 
 var mouseControls = /* record */[
@@ -92,27 +110,25 @@ var mouseControls = /* record */[
   ]
 ];
 
-canvas.addEventListener("mousedown", (function (param) {
-        mouseControls[/* pressed */0] = true;
-        return /* () */0;
-      }));
+function init(param) {
+  var canvas = document.getElementById("screen");
+  canvas.addEventListener("mousedown", (function (param) {
+          mouseControls[/* pressed */0] = true;
+          return /* () */0;
+        }));
+  canvas.addEventListener("mouseup", (function (param) {
+          mouseControls[/* pressed */0] = false;
+          return /* () */0;
+        }));
+  canvas.addEventListener("mousemove", (function (e) {
+          mouseControls[/* position */1] = DomUtils$Inversion.getCursorCoords(canvas, e);
+          return /* () */0;
+        }));
+  return drawingLoop(initialState, mouseControls, canvas, 0);
+}
 
-canvas.addEventListener("mouseup", (function (param) {
-        mouseControls[/* pressed */0] = false;
-        return /* () */0;
-      }));
+init(/* () */0);
 
-canvas.addEventListener("mousemove", (function (e) {
-        mouseControls[/* position */1] = DomUtils$Inversion.getCursorCoords(canvas, e);
-        return /* () */0;
-      }));
-
-drawingLoop(initialState, mouseControls, canvas, 0);
-
-exports.canvas = canvas;
-exports.canvasWidth = canvasWidth;
-exports.canvasHeight = canvasHeight;
-exports.screen = screen;
 exports.inversionCentre = inversionCentre;
 exports.inversionCircumference = inversionCircumference;
 exports.draw = draw;
@@ -121,4 +137,5 @@ exports.computeNextState = computeNextState;
 exports.drawingLoop = drawingLoop;
 exports.initialState = initialState;
 exports.mouseControls = mouseControls;
-/* canvas Not a pure module */
+exports.init = init;
+/*  Not a pure module */
