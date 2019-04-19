@@ -46,7 +46,11 @@ let rec drawingLoop = (state, mouseControls, canvas, _) => {
 let initialState = {
   points: [inversionCentre],
   circumferences: [inversionCircumference],
-  lines: [((0., 0.), (1., 1.)), ((15., 10.), (15., 9.))],
+  lines: [
+    ((0., 0.), (1., 1.)),
+    ((125., 125.), (125., 126.)),
+    ((125., 125.), (126., 125.)),
+  ],
 };
 
 let mouseControls = {pressed: false, position: (0., 0.)};
