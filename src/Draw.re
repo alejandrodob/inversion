@@ -13,6 +13,7 @@ let circumference = ({centre, radius}, ~color=defaultColor, canvas) => {
   beginPath(ctx);
   arc(ctx, c1, c2, radius, 0., pi *. 2., true);
   stroke(ctx);
+  closePath(ctx);
   setDefaultStrokeStyle(ctx);
 };
 
@@ -23,8 +24,8 @@ let segment = (((a1, a2), (b1, b2)), ~color=defaultColor, canvas) => {
   moveTo(ctx, a1, a2);
   lineTo(ctx, b1, b2);
   stroke(ctx);
-  setDefaultStrokeStyle(ctx);
   closePath(ctx);
+  setDefaultStrokeStyle(ctx);
 };
 
 let line = (((a1, a2), (b1, b2)), ~color=defaultColor, canvas) => {
@@ -38,8 +39,8 @@ let line = (((a1, a2), (b1, b2)), ~color=defaultColor, canvas) => {
   moveTo(ctx, a1 -. d1 *. canvasSize, a2 -. d2 *. canvasSize);
   lineTo(ctx, a1 +. d1 *. canvasSize, a2 +. d2 *. canvasSize);
   stroke(ctx);
-  setDefaultStrokeStyle(ctx);
   closePath(ctx);
+  setDefaultStrokeStyle(ctx);
 };
 
 let point = ((p1, p2), ~color=defaultColor, canvas) => {
@@ -48,6 +49,7 @@ let point = ((p1, p2), ~color=defaultColor, canvas) => {
   beginPath(ctx);
   arc(ctx, p1, p2, 1., 0., pi *. 2., true);
   fill(ctx);
+  closePath(ctx);
   setDefaultFillStyle(ctx);
 };
 

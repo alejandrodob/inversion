@@ -23,6 +23,7 @@ function circumference(param, $staropt$star, canvas) {
   ctx.beginPath();
   ctx.arc(centre[0], centre[1], param[/* radius */1], 0, Geometry$Inversion.pi * 2, true);
   ctx.stroke();
+  ctx.closePath();
   ctx.strokeStyle = defaultColor;
   return /* () */0;
 }
@@ -37,8 +38,8 @@ function segment(param, $staropt$star, canvas) {
   ctx.moveTo(match$1[0], match$1[1]);
   ctx.lineTo(match[0], match[1]);
   ctx.stroke();
-  ctx.strokeStyle = defaultColor;
   ctx.closePath();
+  ctx.strokeStyle = defaultColor;
   return /* () */0;
 }
 
@@ -65,8 +66,8 @@ function line(param, $staropt$star, canvas) {
   ctx.moveTo(a1 - d1 * canvasSize, a2 - d2 * canvasSize);
   ctx.lineTo(a1 + d1 * canvasSize, a2 + d2 * canvasSize);
   ctx.stroke();
-  ctx.strokeStyle = defaultColor;
   ctx.closePath();
+  ctx.strokeStyle = defaultColor;
   return /* () */0;
 }
 
@@ -77,6 +78,7 @@ function point(param, $staropt$star, canvas) {
   ctx.beginPath();
   ctx.arc(param[0], param[1], 1, 0, Geometry$Inversion.pi * 2, true);
   ctx.fill();
+  ctx.closePath();
   ctx.fillStyle = defaultColor;
   return /* () */0;
 }
